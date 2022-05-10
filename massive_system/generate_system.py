@@ -38,8 +38,7 @@ finish_point_per_job = start_point_per_job + 2**pow_two_per_job
 # a list of the start and end inxed for flux sector for each job that gets executed
 start_and_finish_point  = [(s,f) for s,f in zip(start_point_per_job,finish_point_per_job)]
 
-print(f'This run will produce {16*(2**n_in_tree) / 1e6 :.0f} Mb of data')
-
+print(f'This run will produce on the order of {24*(2**n_in_tree) / 1e6 :.0f} Mb of data')
 
 output = {
     'lattice': lattice,
