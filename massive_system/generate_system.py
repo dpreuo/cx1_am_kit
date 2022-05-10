@@ -9,31 +9,37 @@ import pickle
 
 # job parameters
 phase_resolution = 50
-
-n_plaquettes = 12
-
-job_power = 3
-number_of_jobs = 2**job_power
-
+n_plaquettes = 25
+job_power = 3    # how many jobs you are submitting has to be 2^this number 
 J = np.array([1,1,1])
+
+
+number_of_jobs = 2**job_power
 
 # generate lattice
 points = generate_random(n_plaquettes)
 lattice = generate_lattice(points)
 
+# set ujk and colour
 ujk = np.full(lattice.n_edges, 1)
 coloring = color_lattice(lattice)
 
+# find spanning tree
 min_spanning_set = plaquette_spanning_tree(lattice)
 n_in_tree =  len(min_spanning_set)
 
+# calculate how many flux sectors each job looks at
 pow_two_per_job = n_in_tree-job_power
 
 jobs_array = np.arange(number_of_jobs)
 start_point_per_job = (2**pow_two_per_job)*jobs_array
 finish_point_per_job = start_point_per_job + 2**pow_two_per_job
 
+# a list of the start and end inxed for flux sector for each job that gets executed
 start_and_finish_point  = [(s,f) for s,f in zip(start_point_per_job,finish_point_per_job)]
+
+print(f'This run will produce {16*(2**n_in_tree) / 1e6 :.0f} Mb of data')
+
 
 output = {
     'lattice': lattice,
