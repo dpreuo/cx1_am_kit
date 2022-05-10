@@ -7,15 +7,14 @@ from koala.graph_color import color_lattice
 import numpy as np
 import pickle
 
-# this is the job number you'd get from the task manager
-job_id = 1
-job_name = 'job_' + str(job_id)
-# how many times you want to test a system
+import os
+job_id = int(os.environ["PBS_ARRAY_INDEX"])
 
+# how many times you want to test a system
 n_repetitions = 2
 
 # system parameters
-n_plaquettes = 6
+n_plaquettes = 14
 J = np.array([1,1,1])
 phase_resolution = 50
 
@@ -36,22 +35,20 @@ for rep in range(n_repetitions):
     # we want the energy and gap size for every flux sector
     energies = []; gaps = []
 
-    # search over every possible combination of ujk flips - looks exhaustively over the whole flux space 
+    # search over every possible combination of ujk flips - looks exhaustively over the whole flux space
     for val in range(2**n_in_tree):
         new_ujk = n_to_ujk_flipped(val, ujk, min_spanning_set)
         Hk = k_hamiltonian_generator(lattice, coloring,new_ujk,J)
         e, g = analyse_hk(Hk, phase_resolution)
         energies.append(e)
         gaps.append(g)
-    
+
     output.append(
-        {'lattice': lattice, 
-        'energies': energies, 
-        'gaps': gaps, 
+        {'lattice': lattice,
+        'energies': energies,
+        'gaps': gaps,
         'spanning_tree': min_spanning_set}
     )
 
-with open('many_systems/results/'+job_name , 'wb') as f:
+with open(f'/rds/general/user/tch14/home/many_systems/results/job_{job_id}.pickle', 'wb') as f:
     pickle.dump(output,f)
-
-
