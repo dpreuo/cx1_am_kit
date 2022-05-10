@@ -1,54 +1,67 @@
+from unittest import result
 from koala.pointsets import generate_random
 from koala.voronization import generate_lattice
 from koala.phase_space import k_hamiltonian_generator, analyse_hk
 from koala.graph_utils import plaquette_spanning_tree
 from koala.flux_finder import n_to_ujk_flipped
 from koala.graph_color import color_lattice
+from mpire import WorkerPool
 import numpy as np
 import pickle
-
+from tqdm import tqdm
 import os
-job_id = int(os.environ["PBS_ARRAY_INDEX"])
+import time
 
-# how many times you want to test a system
-n_repetitions = 2
+if __name__ == '__main__':
+    
+    start_time = time.time()
 
-# system parameters
-n_plaquettes = 14
-J = np.array([1,1,1])
-phase_resolution = 50
+    job_id = 2 #int(os.environ["PBS_ARRAY_INDEX"])
 
+    # how many times you want to test a system
+    n_repetitions = 2
 
-output = []
-for rep in range(n_repetitions):
+    # system parameters
+    n_plaquettes = 15
+    J = np.array([1,1,1])
+    phase_resolution = 50
 
-    # generate lattice
-    points = generate_random(n_plaquettes)
-    lattice = generate_lattice(points)
-    ujk = np.full(lattice.n_edges, 1)
-    coloring = color_lattice(lattice)
+    output = []
+    for rep in range(n_repetitions):
 
-    # find the minimum spanning tree
-    min_spanning_set = plaquette_spanning_tree(lattice)
-    n_in_tree =  len(min_spanning_set)
+        # generate lattice
+        points = generate_random(n_plaquettes)
+        lattice = generate_lattice(points)
+        ujk = np.full(lattice.n_edges, 1)
+        coloring = color_lattice(lattice)
 
-    # we want the energy and gap size for every flux sector
-    energies = []; gaps = []
+        # find the minimum spanning tree
+        min_spanning_set = plaquette_spanning_tree(lattice)
+        n_in_tree =  len(min_spanning_set)
 
-    # search over every possible combination of ujk flips - looks exhaustively over the whole flux space
-    for val in range(2**n_in_tree):
-        new_ujk = n_to_ujk_flipped(val, ujk, min_spanning_set)
-        Hk = k_hamiltonian_generator(lattice, coloring,new_ujk,J)
-        e, g = analyse_hk(Hk, phase_resolution)
-        energies.append(e)
-        gaps.append(g)
+        # we want the energy and gap size for every flux sector
+        # energies = []; gaps = []
 
-    output.append(
-        {'lattice': lattice,
-        'energies': energies,
-        'gaps': gaps,
-        'spanning_tree': min_spanning_set}
-    )
+        def find_gap_energy_from_n(index_in):
+            new_ujk = n_to_ujk_flipped(index_in, ujk, min_spanning_set)
+            Hk = k_hamiltonian_generator(lattice, coloring,new_ujk,J)
+            e, g = analyse_hk(Hk, phase_resolution)
+            return (e,g)
 
-with open(f'/rds/general/user/tch14/home/many_systems/results/job_{job_id}.pickle', 'wb') as f:
-    pickle.dump(output,f)
+        with WorkerPool(n_jobs=8) as pool:
+            results = np.array(pool.map(
+                find_gap_energy_from_n, 
+                range(2**n_in_tree), 
+                progress_bar=True))
+
+        output.append(
+            {'lattice': lattice,
+            'energies': results[:,0],
+            'gaps': results[:,1],
+            'spanning_tree': min_spanning_set}
+        )
+
+    with open(f'/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/results/job_{job_id}.pickle', 'wb') as f:
+        pickle.dump(output,f)
+
+    print(f"Process finished --- {time.time() - start_time} seconds ---")
