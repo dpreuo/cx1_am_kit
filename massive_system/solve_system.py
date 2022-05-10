@@ -1,10 +1,13 @@
 from koala.phase_space import k_hamiltonian_generator, analyse_hk
 from koala.flux_finder import n_to_ujk_flipped
 import pickle
+import numpy as np
+import os
+job_id = int(os.environ["PBS_ARRAY_INDEX"])
 
-job_id = 7
 job_name = 'job_' + str(job_id)
 
+# load job info
 with open('massive_system/lattice_parameters', 'rb') as f:
     x = pickle.load(f)
 
@@ -17,8 +20,7 @@ min_spanning_set = x['spanning_tree']
 phase_resolution = x['phase_resolution']
 number_jobs_log = x['log_two_n_jobs']
 
-# print(start_and_end)
-
+# now look over the subset of flux sectors we have been assigned
 energies = []; gaps = []
 for val in range(start_and_end[0], start_and_end[1]):
     new_ujk = n_to_ujk_flipped(val, ujk, min_spanning_set)
@@ -27,12 +29,15 @@ for val in range(start_and_end[0], start_and_end[1]):
     energies.append(e)
     gaps.append(g)
 
+gaps = np.array(gaps)
+energies = np.array(energies)
+
 output = {
     'job_num': job_id, 
     'energies': energies, 
     'gaps': gaps,
     'start_finish': start_and_end
-    }
+}
 
 with open('massive_system/results/'+job_name , 'wb') as f:
     pickle.dump(output,f)
