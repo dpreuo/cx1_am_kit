@@ -51,5 +51,5 @@ output = {
     'log_two_n_jobs': job_power
 }
 
-with open('massive_system/lattice_parameters', 'wb') as f:
+with open('massive_system/lattice_parameters.pickle', 'wb') as f:
     pickle.dump(output,f)
