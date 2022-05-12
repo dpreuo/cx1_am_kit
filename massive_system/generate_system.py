@@ -1,3 +1,4 @@
+from distutils import core
 from koala.pointsets import generate_random
 from koala.voronization import generate_lattice
 from koala.phase_space import k_hamiltonian_generator, analyse_hk
@@ -10,12 +11,15 @@ import pickle
 if __name__ == '__main__':
     # job parameters
     phase_resolution = 50
-    n_plaquettes = 25
-    job_power = 3    # how many jobs you are submitting has to be 2^this number 
+    n_plaquettes = 26
+    number_of_jobs = 512
+    cores_per_batch = 8
+    prog_bar = True
     J = np.array([1,1,1])
 
-
-    number_of_jobs = 2**job_power
+    job_power = int(np.log2(number_of_jobs))
+    if np.abs(job_power - np.log2(number_of_jobs)) >= 1e-5:
+        raise Exception('number_of_jobs must be a power of 2')
 
     # generate lattice
     points = generate_random(n_plaquettes)
@@ -49,7 +53,9 @@ if __name__ == '__main__':
         'spanning_tree':min_spanning_set,
         'start_and_finish_point': start_and_finish_point,
         'phase_resolution': phase_resolution,
-        'log_two_n_jobs': job_power
+        'log_two_n_jobs': job_power,
+        'cores_per_batch': cores_per_batch,
+        'prog_bar':prog_bar
     }
 
     with open('massive_system/lattice_parameters.pickle', 'wb') as f:
