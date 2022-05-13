@@ -9,6 +9,7 @@ import numpy as np
 import pickle
 import os
 import time
+import datetime
 
 if __name__ == '__main__':
     
@@ -61,5 +62,6 @@ if __name__ == '__main__':
 
     with open(f'/rds/general/user/ppd19/home/kitaev_systems/many_systems/results/job_{job_id}.pickle', 'wb') as f:
         pickle.dump(output,f)
-
-    print(f"Process finished --- {time.time() - start_time} seconds ---")
+    
+    time_diff = time.time() - start_time
+    print(f"Process finished --- {str(datetime.timedelta(seconds=time_diff))} seconds ---")
