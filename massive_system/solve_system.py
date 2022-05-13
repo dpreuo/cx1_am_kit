@@ -58,7 +58,7 @@ if __name__ == '__main__':
         'start_finish': start_and_end
     }
 
-    with open(dir_location + 'results/'+job_name , 'wb') as f:
+    with open(dir_location + 'results/'+job_name+'.pickle' , 'wb') as f:
         pickle.dump(output,f)
     
     time_diff = time.time() - start_time
