@@ -16,6 +16,9 @@ if __name__ == '__main__':
     cores_per_batch = 8
     prog_bar = True
     J = np.array([1,1,1])
+    
+    dir_location = '/rds/general/user/ppd19/home/kitaev_systems/massive_system/'        #run at cx1
+    # dir_location = '/Users/perudornellas/python/imperial/cx1_am_kit/massive_system/'      #run at home
 
     job_power = int(np.log2(number_of_jobs))
     if np.abs(job_power - np.log2(number_of_jobs)) >= 1e-5:
@@ -55,8 +58,8 @@ if __name__ == '__main__':
         'phase_resolution': phase_resolution,
         'log_two_n_jobs': job_power,
         'cores_per_batch': cores_per_batch,
-        'prog_bar':prog_bar
+        'prog_bar': prog_bar,
     }
 
-    with open('massive_system/lattice_parameters.pickle', 'wb') as f:
+    with open(dir_location + 'lattice_parameters.pickle', 'wb') as f:
         pickle.dump(output,f)

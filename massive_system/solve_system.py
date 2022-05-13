@@ -5,16 +5,21 @@ import numpy as np
 import os
 from mpire import WorkerPool
 import time
+import datetime
 
 if __name__ == '__main__':
 
+    dir_location = '/rds/general/user/ppd19/home/kitaev_systems/massive_system/'
+    # dir_location = '/Users/perudornellas/python/imperial/cx1_am_kit/massive_system/'
+
     start_time = time.time()
+    # job_id = 3
     job_id = int(os.environ["PBS_ARRAY_INDEX"]) - 1
 
     job_name = 'job_' + str(job_id + 1 )
 
     # load job info
-    with open('massive_system/lattice_parameters.pickle', 'rb') as f:
+    with open(dir_location + 'lattice_parameters.pickle', 'rb') as f:
         x = pickle.load(f)
 
     lattice = x['lattice']
@@ -42,23 +47,19 @@ if __name__ == '__main__':
             progress_bar=prog_bar
             ))
 
-    energies = []; gaps = []
-    for val in range(start_and_end[0], start_and_end[1]):
-        new_ujk = n_to_ujk_flipped(val, ujk, min_spanning_set)
-        Hk = k_hamiltonian_generator(lattice, coloring,new_ujk,J)
-        e, g = analyse_hk(Hk, phase_resolution)
-        energies.append(e)
-        gaps.append(g)
 
-    gaps = np.array(gaps)
-    energies = np.array(energies)
+    time_diff = time.time() - start_time
+    print(f"Results generated, saving... --- {str(datetime.timedelta(seconds=time_diff))} ---")
 
     output = {
         'job_num': job_id, 
-        'energies': energies, 
-        'gaps': gaps,
+        'energies': results[:,0],
+        'gaps': results[:,1],
         'start_finish': start_and_end
     }
 
-    with open('massive_system/results/'+job_name , 'wb') as f:
+    with open(dir_location + 'results/'+job_name , 'wb') as f:
         pickle.dump(output,f)
+    
+    time_diff = time.time() - start_time
+    print(f"Process finished --- {str(datetime.timedelta(seconds=time_diff))} ---")
