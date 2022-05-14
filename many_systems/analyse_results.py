@@ -30,8 +30,12 @@ def lieb_check(flux, side):
 
     return out
 
-
+weird_lattices = []
 for n,result in enumerate(full_output):
+
+    save_result = False
+    flag = ''
+
     # load lattice
     lattice = result['lattice']
     energies = result['energies']
@@ -49,10 +53,23 @@ for n,result in enumerate(full_output):
     for f, s in zip(fluxes, all_sides):
         if not lieb_check(f,s):
             print(f'index {n:04d} --- Fails Lieb check!!!!!')
+            save_result = True
+            flag = flag + ' Gnd state '
+            
     
     # check gaps
     g = gaps[winner]
     if g<1e-10:
         print(f'index {n:04d} --- gap: {g:.2E}')
+        save_result = True
+        flag = flag + ' Gapless '
+    
+    if save_result:
+        weird_lattices.append(
+            (result, 'Wrong ground state')
+        )
+    
+with open('/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/outliers.pickle', 'wb') as f:
+    pickle.dump(weird_lattices, f)
 
     
