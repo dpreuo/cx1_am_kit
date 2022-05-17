@@ -12,7 +12,7 @@ from mpire import WorkerPool
 
 if __name__ == '__main__':
 
-    job_id = 3#int(os.environ["PBS_ARRAY_INDEX"]) 
+    job_id = int(os.environ["PBS_ARRAY_INDEX"]) 
     input_location = 'state_scaling/systems.pickle'
     results_location = 'state_scaling/results/'
 
