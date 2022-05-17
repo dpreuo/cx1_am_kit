@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     scales = np.linspace(0.2,1,500)
     
-    location = 'state_scaling/'
+    location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling'
 
     # generate all the systems
     all_systems = []
