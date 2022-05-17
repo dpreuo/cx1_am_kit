@@ -131,8 +131,10 @@ dmypy.json
 # Specific to this repo - ie directories we use to test stuff
 *.pickle
 .DS_Store
-*/logs
-*/results
+*/logs/errors/*
+*/logs/outputs/*
+*/results/*
+
 *scrap*
 
 
