@@ -3,10 +3,11 @@ from koala.hamiltonian import generate_majorana_hamiltonian
 import pickle as pkl
 import os
 from tqdm import tqdm
-
+import time
+import datetime
 
 if __name__ == '__main__':
-
+    start_time = time.time()
     # run at home
     # job_id = 3
     # input_location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/systems.pickle'
@@ -43,5 +44,6 @@ if __name__ == '__main__':
                 }
                 pkl.dump(output,f)
 
-
+    time_diff = time.time() - start_time
+    print(f"Process finished --- {str(datetime.timedelta(seconds=time_diff))} ---")
     

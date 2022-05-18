@@ -5,6 +5,8 @@ from koala.graph_color import color_lattice
 from koala.flux_finder import find_flux_sector
 import pickle as pkl
 from tqdm import tqdm
+import time
+import datetime
 
 def scale_points_down(points, scaling:float):
     if not scaling > 0 or not scaling<=1:
@@ -17,7 +19,7 @@ def scale_points_down(points, scaling:float):
 # this code generates the set of points and sets the starting parameters for the rest of the calculation
 
 if __name__ == '__main__':
-
+    start_time = time.time()
     # run at home
     # location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/'
     # max_system_size = 20
@@ -58,4 +60,5 @@ if __name__ == '__main__':
             pkl.dump(res_dict, f)
 
     
-
+    time_diff = time.time() - start_time
+    print(f"Process finished --- {str(datetime.timedelta(seconds=time_diff))} ---")
