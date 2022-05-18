@@ -1,5 +1,4 @@
 from koala.pointsets import generate_random
-from matplotlib import pyplot as plt
 import numpy as np
 from koala.voronization import generate_lattice
 from koala.graph_color import color_lattice
@@ -21,13 +20,13 @@ if __name__ == '__main__':
 
     # run at home
     # location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/'
-    max_system_size = 20
-    number_of_scales = 50
+    # max_system_size = 20
+    # number_of_scales = 50
 
     # run on cx1
     location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/'
-    # max_system_size = 50
-    # number_of_scales = 500
+    max_system_size = 50
+    number_of_scales = 500
 
  
     N = max_system_size**2
