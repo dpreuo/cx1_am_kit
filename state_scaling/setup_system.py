@@ -30,21 +30,25 @@ if __name__ == '__main__':
     max_system_size = 50
     number_of_scales = 500
 
- 
     N = max_system_size**2
 
     points_max = generate_random(N)
     j_vals = np.array([1,1,1])
+    q_powers = np.arange(1,6)
 
     scales = np.linspace(0.2,1,number_of_scales)
     
     metaparameters = {
         'max_points': points_max,
         'j_vals': j_vals,
-        'scales': scales
+        'scales': scales,
+        'q_powers': q_powers
     }
+
     with open(location + 'systems.pickle', 'wb') as f:
         pkl.dump(metaparameters, f)
+
+        total_memory_per_job = 0
 
         # generate all the systems
         for s in tqdm(scales):
@@ -56,9 +60,16 @@ if __name__ == '__main__':
             gnd_ujk =find_flux_sector(lattice, gnd_flux_sector)
 
             res_dict = (lattice, coloring, gnd_ujk, s)
-        
+
+            n_sites = lattice.n_vertices
+            output_number_floats = n_sites*(n_sites+1)
+            n_bits = 16*output_number_floats
+            total_memory_per_job += n_bits
+
             pkl.dump(res_dict, f)
 
+
+    print(f'Expected memory per job = {total_memory_per_job / 1e9} Gb')
     
     time_diff = time.time() - start_time
     print(f"Process finished --- {str(datetime.timedelta(seconds=time_diff))} ---")

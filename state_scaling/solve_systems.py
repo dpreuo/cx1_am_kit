@@ -2,6 +2,7 @@ import numpy as np
 from koala.hamiltonian import generate_majorana_hamiltonian
 import pickle as pkl
 import os
+from scipy import linalg as la
 from tqdm import tqdm
 import time
 import datetime
@@ -25,6 +26,8 @@ if __name__ == '__main__':
         points_max = metaparmeters['max_points'] 
         j_vals = metaparmeters['j_vals'] 
         scales = metaparmeters['scales']
+        q_powers = metaparmeters['q_powers']
+
         number_of_scales = len(scales)  
 
         with open(results_location + f'job_{job_id}.pickle', 'wb') as f:
@@ -35,11 +38,13 @@ if __name__ == '__main__':
                 lattice, coloring, gnd_ujk, s = pkl.load(f_in)
                 ujk = 1 - 2*np.random.randint(0,2,lattice.n_edges)
                 hamiltonian = generate_majorana_hamiltonian(lattice, coloring, ujk, j_vals)
-                e,v = np.linalg.eigh(hamiltonian)
+                e,v = la.eigh(hamiltonian)
+                participation_ratios = np.sum(np.abs(v[:,:,np.newaxis])**q_powers, axis=0)
+
                 output = {
                     'system_index': n,
                     'energies': e,
-                    'eigenstates': v,
+                    'participation_ratios': participation_ratios,
                     'ujk': ujk
                 }
                 pkl.dump(output,f)
