@@ -15,14 +15,14 @@ from tqdm import tqdm
 if __name__ == '__main__':
 
     # run at home
-    job_id = 3
-    input_location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/systems.pickle'
-    results_location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/results/'
+    # job_id = 3
+    # input_location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/systems.pickle'
+    # results_location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/results/'
 
     # run on cx1
-    # job_id = int(os.environ["PBS_ARRAY_INDEX"]) 
-    # input_location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/systems.pickle'
-    # results_location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/results/'
+    job_id = int(os.environ["PBS_ARRAY_INDEX"]) 
+    input_location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/systems.pickle'
+    results_location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/results/'
 
     with open(input_location, 'rb') as f_in:
 

@@ -20,16 +20,17 @@ def scale_points_down(points, scaling:float):
 if __name__ == '__main__':
 
     # run at home
-    location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/'
-    max_system_size = 30
+    # location = '/Users/perudornellas/python/imperial/cx1_am_kit/state_scaling/'
+    max_system_size = 20
+    number_of_scales = 50
 
     # run on cx1
+    location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/'
     # max_system_size = 50
-    # location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/'
+    # number_of_scales = 500
 
  
     N = max_system_size**2
-    number_of_scales = 500
 
     points_max = generate_random(N)
     j_vals = np.array([1,1,1])
