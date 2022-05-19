@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 ujk = 1 - 2*np.random.randint(0,2,lattice.n_edges)
                 hamiltonian = generate_majorana_hamiltonian(lattice, coloring, ujk, j_vals)
                 e,v = la.eigh(hamiltonian)
-                participation_ratios = np.sum(np.abs(v[:,:,np.newaxis])**q_powers, axis=0)
+                participation_ratios = np.sum(np.abs(v[:,:,np.newaxis])**(2*q_powers), axis=0)
 
                 output = {
                     'system_index': n,
