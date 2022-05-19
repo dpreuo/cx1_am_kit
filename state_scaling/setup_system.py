@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     # run on cx1
     location = '/rds/general/user/ppd19/home/cx1_am_kit/state_scaling/'
-    max_system_size = 45
+    max_system_size = 50
     number_of_scales = 500
 
     N = max_system_size**2
