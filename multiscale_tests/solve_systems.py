@@ -1,16 +1,14 @@
 from koala.pointsets import generate_random
 from koala.voronization import generate_lattice
-from koala.phase_space import k_hamiltonian_generator, analyse_hk, gap_over_phase_space
+from koala.phase_space import k_hamiltonian_generator
 from koala.flux_finder import find_flux_sector
 from koala.graph_color import color_lattice
-from mpire import WorkerPool
 import numpy as np
 import pickle
 import scipy.linalg as la
 import time
 from tqdm import tqdm
-from matplotlib import pyplot as plt
-
+import os
 
 """
 Questions this code tries to answer:
@@ -22,7 +20,7 @@ Questions this code tries to answer:
 
 if __name__ == '__main__':
 
-    job_id = 1
+    job_id = int(os.environ["PBS_ARRAY_INDEX"])
 
     q_powers = np.arange(2, 7)
     k_resolution = 20
