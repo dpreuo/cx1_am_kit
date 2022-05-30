@@ -1,4 +1,3 @@
-import imp
 import os
 import pickle
 from koala.graph_color import color_lattice
