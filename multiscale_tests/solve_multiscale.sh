@@ -10,4 +10,4 @@ module load intel-suite anaconda3/personal
 . ~/anaconda3/etc/profile.d/conda.sh
 conda activate base
 
-python -u /rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/solve_system.py
+python -u /rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/solve_systems.py
