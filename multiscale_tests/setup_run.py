@@ -24,8 +24,8 @@ if __name__ == '__main__':
     maximum_L = 8  # maximum the computer can solve is about 50*50 - takes a while
     n_steps = 10
 
-    location = '/Users/perudornellas/python/imperial/cx1_am_kit/multiscale_tests/'
-
+    # location = '/Users/perudornellas/python/imperial/cx1_am_kit/multiscale_tests/'
+    location = '/rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/'
 
     plaquette_n_lims = np.array([minimum_L, maximum_L])**2
     plaquette_numbers = np.logspace(np.log10(plaquette_n_lims[0]), np.log10(
