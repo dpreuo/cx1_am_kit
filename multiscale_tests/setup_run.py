@@ -15,14 +15,14 @@ from matplotlib import pyplot as plt
 if __name__ == '__main__':
 
     # big run
-    # minimum_L = 5
-    # maximum_L = 40  # maximum the computer can solve is about 50*50 - takes a while
-    # n_steps = 40
+    minimum_L = 5
+    maximum_L = 40  # maximum the computer can solve is about 50*50 - takes a while
+    n_steps = 40
 
     # small run
-    minimum_L = 5
-    maximum_L = 8  # maximum the computer can solve is about 50*50 - takes a while
-    n_steps = 10
+    # minimum_L = 5
+    # maximum_L = 8  # maximum the computer can solve is about 50*50 - takes a while
+    # n_steps = 10
 
     # location = '/Users/perudornellas/python/imperial/cx1_am_kit/multiscale_tests/'
     location = '/rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/'
