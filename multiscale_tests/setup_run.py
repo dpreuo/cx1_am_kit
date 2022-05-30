@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 if __name__ == '__main__':
 
     # big run
-    minimum_L = 5
+    minimum_L = 3
     maximum_L = 40  # maximum the computer can solve is about 50*50 - takes a while
     n_steps = 40
 
