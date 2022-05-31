@@ -32,7 +32,7 @@ if __name__ == '__main__':
         plaquette_n_lims[1]), n_steps).round().astype('int')
 
     # speed estimates
-    m,c = 2.495591702938489, -10.584595582678062
+    m,c = 2.3046332407008667, -9.291602835745168
 
     def f(s):
         return np.exp(c)*s**m
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     total_time = np.sum(f(plaquette_numbers))
     print(f'We expect the run to take: {str(datetime.timedelta(seconds = total_time))}')
 
-    
 
     with open(location + 'run_params.pickle', 'wb' ) as f:
         pickle.dump(plaquette_numbers, f)
+        pickle.dump((minimum_L, maximum_L , n_steps) ,f)

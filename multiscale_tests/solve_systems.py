@@ -20,13 +20,13 @@ Questions this code tries to answer:
 
 if __name__ == '__main__':
 
-    job_id = int(os.environ["PBS_ARRAY_INDEX"])
-
+    # job_id = int(os.environ["PBS_ARRAY_INDEX"])
+    job_id = 4
     q_powers = np.arange(2, 7)
     k_resolution = 20
 
-    # location = '/Users/perudornellas/python/imperial/cx1_am_kit/multiscale_tests/'
-    location = '/rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/'
+    location = '/Users/perudornellas/python/imperial/cx1_am_kit/multiscale_tests/'
+    # location = '/rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/'
     J = np.array([1, 1, 1])
 
     with open(f'{location}run_params.pickle', 'rb') as f:
