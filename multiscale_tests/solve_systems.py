@@ -37,7 +37,7 @@ if __name__ == '__main__':
         for p in tqdm(plaquette_numbers):
             t0 = time.time()
             points = generate_random(p)
-            lattice = generate_lattice(points)
+            lattice = generate_lattice(points, shift_vertices=False)
             coloring = color_lattice(lattice)
             s = np.array([plaq.n_sides for plaq in lattice.plaquettes])
             gnd_flux = (-(1j)**s).real + (-(1j)**s).imag
