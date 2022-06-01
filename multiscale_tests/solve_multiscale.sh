@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#PBS -J 1025-3025
+#PBS -J 1-1000
 #PBS -lselect=1:ncpus=1:mem=4gb
 #PBS -lwalltime=10:00:00
 #PBS -e /rds/general/user/ppd19/home/cx1_am_kit/multiscale_tests/logs/errors/
