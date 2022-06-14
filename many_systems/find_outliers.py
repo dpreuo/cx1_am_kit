@@ -6,7 +6,8 @@ from koala import plotting as pl
 from koala.flux_finder import n_to_ujk_flipped, fluxes_from_bonds
 from matplotlib import pyplot as plt
 
-results_location = 'many_systems/results/'
+# results_location = 'many_systems/results_anisotropic/'
+results_location = 'many_systems/results_isotropic/'
 
 # load all the results
 full_output = []

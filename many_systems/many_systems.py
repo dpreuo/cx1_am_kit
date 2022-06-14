@@ -11,18 +11,39 @@ import os
 import time
 import datetime
 
+
+
 if __name__ == '__main__':
     
     start_time = time.time()
 
+    # isotropic system
+    # system_type = 'results_isotropic'
+    # J = np.array([1,1,1])
+
+    # anisotropic system
+    system_type = 'results_anisotropic'
+    J = np.array([1,0.1,0.1])
+
+    # run at home
+    # job_id = 1      # int(os.environ["PBS_ARRAY_INDEX"])
+    # prog_bar = True        # print a progress bar? (if yes you get weird warnings :\ )
+    # n_repetitions = 10      # how many systems do you want to solve per job
+    # cores_per_batch = 8     # how many cores can you count on having for each node
+    # save_location = f'/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/{system_type}/'
+    # n_plaquettes = 8
+    
+    # run at cx1
     job_id = int(os.environ["PBS_ARRAY_INDEX"])
     prog_bar = True        # print a progress bar? (if yes you get weird warnings :\ )
     n_repetitions = 6       # how many systems do you want to solve per job
     cores_per_batch = 8     # how many cores can you count on having for each node
+    save_location = f'/rds/general/user/ppd19/home/kitaev_systems/many_systems/{system_type}/'
+    n_plaquettes = 16
+
+
 
     # system parameters
-    n_plaquettes = 16
-    J = np.array([1,1,1])
     phase_resolution = 50
 
     output = []
@@ -60,7 +81,7 @@ if __name__ == '__main__':
             'spanning_tree': min_spanning_set}
         )
 
-    with open(f'/rds/general/user/ppd19/home/kitaev_systems/many_systems/results/job_{job_id}.pickle', 'wb') as f:
+    with open(f'{save_location}job_{job_id}.pickle', 'wb') as f:
         pickle.dump(output,f)
     
     time_diff = time.time() - start_time
