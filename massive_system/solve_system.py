@@ -9,7 +9,7 @@ import datetime
 
 if __name__ == '__main__':
 
-    dir_location = '/rds/general/user/ppd19/home/kitaev_systems/massive_system/'
+    dir_location = '/rds/general/user/ppd19/home/cx1_am_kit/massive_system/'
     # dir_location = '/Users/perudornellas/python/imperial/cx1_am_kit/massive_system/'
 
     start_time = time.time()

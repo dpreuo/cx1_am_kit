@@ -17,7 +17,7 @@ if __name__ == '__main__':
     prog_bar = True
     J = np.array([1,1,1])
     
-    dir_location = '/rds/general/user/ppd19/home/kitaev_systems/massive_system/'        #run at cx1
+    dir_location = '/rds/general/user/ppd19/home/cx1_am_kit/massive_system/'        #run at cx1
     # dir_location = '/Users/perudornellas/python/imperial/cx1_am_kit/massive_system/'      #run at home
 
     job_power = int(np.log2(number_of_jobs))

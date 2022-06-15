@@ -38,7 +38,7 @@ if __name__ == '__main__':
     prog_bar = True        # print a progress bar? (if yes you get weird warnings :\ )
     n_repetitions = 6       # how many systems do you want to solve per job
     cores_per_batch = 8     # how many cores can you count on having for each node
-    save_location = f'/rds/general/user/ppd19/home/kitaev_systems/many_systems/{system_type}/'
+    save_location = f'/rds/general/user/ppd19/home/cx1_am_kit/many_systems/{system_type}/'
     n_plaquettes = 16
 
 
