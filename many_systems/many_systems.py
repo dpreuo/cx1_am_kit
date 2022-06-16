@@ -1,3 +1,4 @@
+from random import random
 from koala.pointsets import generate_random
 from koala.voronization import generate_lattice
 from koala.phase_space import k_hamiltonian_generator, analyse_hk
@@ -11,7 +12,17 @@ import os
 import time
 import datetime
 
-
+def generate_J():
+    xy = np.random.rand(2)
+    x0 = np.array([1,0,0])
+    x1 = np.array([-1,1,1])
+    v1 = np.array([-1,1,0])
+    v2 = np.array([-1,0,1])
+        
+    if sum(xy) <= 1 :
+        return x0 + xy[0]*v1 + xy[1]*v2
+    else: 
+        return x1 - xy[0]*v1 - xy[1]*v2
 
 if __name__ == '__main__':
     
@@ -22,8 +33,13 @@ if __name__ == '__main__':
     # J = np.array([1,1,1])
 
     # anisotropic system
-    system_type = 'results_anisotropic'
-    J = np.array([1,0.1,0.1])
+    # system_type = 'results_anisotropic'
+    # J = np.array([1,0.1,0.1])
+
+    # random j values 
+    system_type = 'random_j'
+    J = generate_J
+
 
     # run at home
     # job_id = 1      # int(os.environ["PBS_ARRAY_INDEX"])
@@ -78,7 +94,8 @@ if __name__ == '__main__':
             {'lattice': lattice,
             'energies': results[:,0],
             'gaps': results[:,1],
-            'spanning_tree': min_spanning_set}
+            'spanning_tree': min_spanning_set,
+            'J': J}
         )
 
     with open(f'{save_location}job_{job_id}.pickle', 'wb') as f:
