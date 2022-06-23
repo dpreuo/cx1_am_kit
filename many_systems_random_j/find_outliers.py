@@ -6,10 +6,10 @@ from koala import plotting as pl
 from koala.flux_finder import n_to_ujk_flipped, fluxes_from_bonds
 from matplotlib import pyplot as plt
 
-results_location = 'many_systems/results_anisotropic/'
-# results_location = 'many_systems/results_isotropic/'
+results_location = 'many_systems_random_j/results/'
 
 files = [f for f in os.listdir(results_location) if not f.startswith('.')]
+
 # load all the results
 full_output = []
 for filename in files:
@@ -71,7 +71,7 @@ for n,result in enumerate(full_output):
             (result,flag)
         )
     
-with open('/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/outliers.pickle', 'wb') as f:
+with open('many_systems_random_j/outliers.pickle', 'wb') as f:
     pickle.dump(weird_lattices, f)
 
     

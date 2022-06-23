@@ -10,11 +10,12 @@ from koala.graph_color import color_lattice
 from tqdm import tqdm
 from mpire import WorkerPool
 
-results_location = 'many_systems/results/'
+results_location = '/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/results_anisotropic/'
+files = [f for f in os.listdir(results_location) if not f.startswith('.')]
 
 # load all the results
 full_output = []
-for filename in os.listdir(results_location):
+for filename in files:
     with open(results_location + filename, 'rb') as f:
         x = pickle.load(f)
         full_output = [*full_output, *x]
@@ -22,7 +23,7 @@ for filename in os.listdir(results_location):
 print(f'we have {len(full_output)} lattices to look at')
 
 
-for n,result in enumerate(full_output[100:110]):
+for n,result in enumerate(full_output):
 
     save_result = False
     flag = ''
