@@ -33,13 +33,8 @@ if __name__ == '__main__':
     # J = np.array([1,1,1])
 
     # anisotropic system
-    # system_type = 'results_anisotropic'
-    # J = np.array([1,0.1,0.1])
-
-    # random j values 
-    system_type = 'random_j'
-    J = generate_J
-
+    system_type = 'results_anisotropic'
+    J = np.array([1,0.25,0.25])
 
     # run at home
     # job_id = 1      # int(os.environ["PBS_ARRAY_INDEX"])
