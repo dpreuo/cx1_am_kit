@@ -33,6 +33,8 @@ def lieb_check(flux, side):
     return out
 
 weird_lattices = []
+gap_anomalies = 0
+
 for n,result in enumerate(full_output):
 
     save_result = False
@@ -46,7 +48,18 @@ for n,result in enumerate(full_output):
     
     # find the winning flux etc
     ujk = np.ones(lattice.n_edges)
+    
     winner = np.argmin(energies)
+    w_mod = energies.copy(); w_mod[winner] = 100
+    winner2 = np.argmin(w_mod)
+    largest_gap = np.argmax(gaps)
+    
+    if winner == largest_gap or winner2 == largest_gap:
+        pass
+        # print(largest_gap, winner, winner2)
+    else:
+        gap_anomalies += 1
+
     winning_ujk = n_to_ujk_flipped(winner, ujk, spanning_tree)
     fluxes = fluxes_from_bonds(lattice, winning_ujk)
     all_sides = np.array([plaq.n_sides for plaq in lattice.plaquettes])
@@ -75,3 +88,5 @@ with open('/Users/perudornellas/python/imperial/cx1_am_kit/many_systems/outliers
     pickle.dump(weird_lattices, f)
 
     
+print(len(weird_lattices)/len(full_output))
+print(gap_anomalies/len(full_output))
